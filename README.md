@@ -1,4 +1,4 @@
-# LeetCode in JavaScript and TypeScript
+# LeetCode in JavaScript and TypeScript and Python
 
 ## About
 
