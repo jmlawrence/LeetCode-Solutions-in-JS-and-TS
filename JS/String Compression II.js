@@ -29,18 +29,23 @@
  * @return {number}
  */
 var getLengthOfOptimalCompression = function (s, k) {
-  let n = s.length;
+  let strLength = s.length;
   let memo = {};
 
   const getKey = (a, b) => {
     return `${a}-${b}`;
   };
-  const dp = (start, k) => {
-    if (getKey(start, k) in memo) {
-      return memo[getKey(start, k)];
+
+  const dp = (start, maxNumOfReplacements) => {
+    if (getKey(start, maxNumOfReplacements) in memo) {
+      return memo[getKey(start, maxNumOfReplacements)];
     }
 
-    if (start === n || n - start <= k) {
+    // if we're at the end; or not enough loops to improve our best score; skip
+    if (
+      start === strLength ||
+      strLength - start <= maxNumOfReplacements
+    ) {
       return 0;
     }
 
@@ -48,29 +53,39 @@ var getLengthOfOptimalCompression = function (s, k) {
     let count = {};
     let mostFreq = 0;
 
-    for (let i = start; i < n; i++) {
+    for (let i = start; i < strLength; i++) {
       let c = s[i];
+
       if (c in count) {
         count[c]++;
       } else {
         count[c] = 1;
       }
 
+      // the most frequent occurence of this char so far
       mostFreq = Math.max(mostFreq, count[c]);
 
       compressedLength =
         1 + (mostFreq > 1 ? (mostFreq + '').length : 0);
 
-      if (k >= i - start + 1 - mostFreq) {
+      if (
+        maxNumOfReplacements >=
+        i - start + 1 - mostFreq
+      ) {
+        // update with the smallest
         answer = Math.min(
           answer,
           compressedLength +
-            dp(i + 1, k - (i - start + 1 - mostFreq))
+            dp(
+              i + 1,
+              maxNumOfReplacements -
+                (i - start + 1 - mostFreq)
+            )
         );
       }
     }
 
-    memo[getKey(start, k)] = answer;
+    memo[getKey(start, maxNumOfReplacements)] = answer;
 
     return answer;
   };
