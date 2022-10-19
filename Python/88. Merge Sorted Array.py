@@ -1,4 +1,4 @@
-# {{Problem #88}: {Problem Title}
+# 88. Merge Sorted Array
 
 # Problem description
 #
