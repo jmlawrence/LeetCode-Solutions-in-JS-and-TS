@@ -6,7 +6,7 @@
 
 // A subtree of a binary tree tree is a tree that consists of a node in tree and all of this node's descendants. The tree tree could also be considered as a subtree of itself.
 
- // ---------- EXAMPLES ---------- //
+// ---------- EXAMPLES ---------- //
 
 // Example 1:
 
@@ -35,36 +35,36 @@
  */
 
 const isSameTree = (p, q) => {
-    // If neither - same
-    if (!p && !q) {
-        return true;
-    }
+  // If neither - same
+  if (!p && !q) {
+    return true;
+  }
 
-    // If both values exist and are same - keep going deeper
-    if (p && q && q.val === p.val) {
-        return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
-    }
+  // If both values exist and are same - keep going deeper
+  if (p && q && q.val === p.val) {
+    return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+  }
 
-    // Default to false
-    return false;
+  // Default to false
+  return false;
 };
-    
-var isSubtree = function(root, subRoot) {
-    // We're reached the end of this subtree - so, returning true
-    if (!subRoot) {
-        return true;
-    }
-    
-    // We're still processing subtree - but, there is no main tree left - so, returning false
-    if (!root) {
-        return false;
-    }
-    
-    // If this subtree is the same  - no need to keep looking - we found a match.
-    if (isSameTree(root, subRoot)) {
-        return true;
-    }
 
-    // Subtree is different - but, keep looking
-    return isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot);
+var isSubtree = function (root, subRoot) {
+  // We're reached the end of this subtree - so, returning true
+  if (!subRoot) {
+    return true;
+  }
+
+  // We're still processing subtree - but, there is no main tree left - so, returning false
+  if (!root) {
+    return false;
+  }
+
+  // If this subtree is the same  - no need to keep looking - we found a match.
+  if (isSameTree(root, subRoot)) {
+    return true;
+  }
+
+  // Subtree is different - but, keep looking
+  return isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot);
 };
