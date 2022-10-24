@@ -31,6 +31,4 @@ add a new file to reflect the differences, i.e. `1. Two Sum
 
 ## Naming conventions of files
 
-Use the name of the LeetCode problem (excluding the number
-in the name of the file). Since the number is contained in
-the file, it remains searchable if needed.
+Use the number and name of the LeetCode problem: `1. Two Sum (Iterative).js`. 
