@@ -14,28 +14,32 @@
 
 // -------------------------------------------
 
-var MedianFinder = function() {
-    this.one = new MaxPriorityQueue();
-    this.two = new MinPriorityQueue();
-    this.balanced = true;
+var MedianFinder = function () {
+  this.one = new MaxPriorityQueue();
+  this.two = new MinPriorityQueue();
+  this.balanced = true;
 };
 
-MedianFinder.prototype.addNum = function(num) {
-    if (this.balanced) {
-        this.one.enqueue(num); 
-        this.two.enqueue(this.one.dequeue().element);
-    } else {
-        this.two.enqueue(num);
-        this.one.enqueue(this.two.dequeue().element);
-    }
-    
-    this.balanced = !this.balanced;
+MedianFinder.prototype.addNum = function (num) {
+  if (this.balanced) {
+    this.one.enqueue(num);
+    this.two.enqueue(this.one.dequeue().element);
+  } else {
+    this.two.enqueue(num);
+    this.one.enqueue(this.two.dequeue().element);
+  }
+
+  this.balanced = !this.balanced;
 };
 
-MedianFinder.prototype.findMedian = function() {
-    if (this.balanced) {
-        return (this.one.front().element + this.two.front().element) / 2;
-    } else {
-        return this.two.front().element;
-    }
+MedianFinder.prototype.findMedian = function () {
+  if (this.balanced) {
+    return (
+      (this.one.front().element +
+        this.two.front().element) /
+      2
+    );
+  } else {
+    return this.two.front().element;
+  }
 };
