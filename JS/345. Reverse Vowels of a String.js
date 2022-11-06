@@ -22,7 +22,7 @@
     const dict = {};
     const vowels = new Set(['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U']);
     // Loop through the string and store all of the vowels along with their index
-    for (let i = 0; i < s.length; i++) {
+    for (let i in s) {
         if (vowels.has(s[i])) {
             dict[i] = s[i];
         }
@@ -36,7 +36,7 @@
     }
     let strArr = s.split('');
     // Place all vowels in their reversed order
-    for (let i = 0; i < vowelStack.length; i++) {
+    for (let i in vowelStack) {
         strArr[indexStack[i]] = vowelStack[i];
     }
     return strArr.join('');
