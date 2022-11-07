@@ -35,16 +35,19 @@ var findMin = function (nums) {
   let right = nums.length - 1;
 
   while (left <= right) {
-    // Area sorted - see if lower than lowest
+    // if section sorted, see if min
     if (nums[left] < nums[right]) {
       result = Math.min(result, nums[left]);
       break;
     }
 
-    let middle = left + (right - left) / 2;
+    let middle = right - left;
     result = Math.min(result, nums[middle]);
-    if (nums[middle] >= nums[left]) {
+
+    // right is sorted
+    if (nums[right] >= nums[left]) {
       left = middle + 1;
+      // right is sorted
     } else {
       right = middle - 1;
     }
