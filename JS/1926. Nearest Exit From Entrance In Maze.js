@@ -39,6 +39,7 @@ const dir = [[0, 1], [0, -1], [1, 0], [-1, 0]];
 var nearestExit = function(maze, entrance) {
     // The idea is to use a queue with each element in the queue representing a valid space on the board and how many steps it took to get there
     const m = maze.length, n = maze[0].length;
+    if (m === 0 || n === 0 || m === 1 && n === 1) return -1;
     const [entranceY, entranceX] = entrance;
     maze[entranceY][entranceX] = "+";
     // Add the entrance, and zero steps to the queue
