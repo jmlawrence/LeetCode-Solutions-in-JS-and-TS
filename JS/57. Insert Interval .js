@@ -21,31 +21,31 @@
  * @param {number[]} newInterval
  * @return {number[][]}
  */
-
-var insert = function(intervals, newInterval) {
+l
+var insert = function (intervals, newInterval) {
     let res = [];
     const START = 0;
     const END = 1;
-    
+
     for (let i = 0; i < intervals.length; i++) {
         // If new interval ends before this interval starts
         if (newInterval[END] < intervals[i][START]) {
             res.push(newInterval);
             return [...res, ...intervals.slice(i)];
-            
-        // If new interval ends after this interval starts
+
+            // If new interval ends after this interval starts
         } else if (newInterval[START] > intervals[i][END]) {
             res.push(intervals[i]);
         } else {
-        
+
             // Interval conflicts with existing interval
-            let minStart = Math.min(newInterval[START], intervals[i][START]);
+            let minStart = Math.min(newInterva[START], intervals[i][START]);
             let maxEnd = Math.max(newInterval[END], intervals[i][END]);
             newInterval = [minStart, maxEnd];
         }
     }
-    
+
     res.push(newInterval);
-    
+
     return res;
 };

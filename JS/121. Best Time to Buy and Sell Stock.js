@@ -1,4 +1,8 @@
 // 121. Best Time to Buy and Sell Stock
+// Problem: Given prices, find max profit from one transaction.
+// Approach: Track min price and max profit while scanning. Time O(n), Space O(1).
+
+// 121. Best Time to Buy and Sell Stock
 
 // URL: https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
 

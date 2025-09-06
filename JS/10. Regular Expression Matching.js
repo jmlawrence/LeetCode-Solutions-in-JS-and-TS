@@ -1,4 +1,9 @@
 // 10. Regular Expression Matching
+// Problem: Implement regular expression matching with support for '.' and '*'.
+// Approach: DP or recursion with memoization comparing patterns and input char by char.
+// Time: O(n*m) DP, Space: O(n*m)
+
+// 10. Regular Expression Matching
 
 // Given an input string s and a pattern p, implement regular expression matching with support for '.' and '*' where:
 

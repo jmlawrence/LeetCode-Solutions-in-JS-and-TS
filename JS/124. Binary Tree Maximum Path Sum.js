@@ -1,4 +1,8 @@
 // 124. Binary Tree Maximum Path Sum
+// Problem: Find the maximum path sum in a binary tree where path may start and end at any node.
+// Approach: DFS with post-order returns max gain; track global max. Time O(n), Space O(h).
+
+// 124. Binary Tree Maximum Path Sum
 
 // -------------------------------------------
 
@@ -23,31 +27,31 @@
  * @param {TreeNode} root
  * @return {number}
  */
-var maxPathSum = function(root) {
+var maxPathSum = function (root) {
     let result = root.val;
-    
+
     const dfs = (node) => {
         if (!node) {
             return 0;
         }
-        
+
         // Recurrsive - go left and right
         let leftMax = dfs(node.left);
         let rightMax = dfs(node.right);
-        
+
         // Gets rid of negatives.
         leftMax = Math.max(leftMax, 0);
         rightMax = Math.max(rightMax, 0);
-        
+
         // Update result if node + left + right is better than existing result.
         // Since we can only have one split - see if having the split here results in biggest path.
         result = Math.max(result, node.val + leftMax + rightMax);
-        
+
         // Return current val + either left or right
         return node.val + Math.max(leftMax, rightMax);
     }
-    
+
     dfs(root);
-    
+
     return result;
 };

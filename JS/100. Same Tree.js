@@ -1,4 +1,9 @@
 // 100. Same Tree
+// Problem: Given two binary trees, determine if they are structurally identical and node values are the same.
+// Approach: DFS recursion comparing nodes in sync; return false on mismatch.
+// Time: O(n), Space: O(h) recursion stack
+
+// 100. Same Tree
 
 // -------------------------------------------
 
@@ -39,17 +44,17 @@
  * @param {TreeNode} q
  * @return {boolean}
  */
-var isSameTree = function(p, q) {
+var isSameTree = function (p, q) {
     // Both are empty => return true!
     if (!p && !q) {
         return true;
     }
-    
+
     // One is different - return false!
     if (!p || !q || p.val !== q.val) {
         return false;
     }
-    
+
     // DFS
     return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
 };

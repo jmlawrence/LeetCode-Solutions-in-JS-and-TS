@@ -1,4 +1,8 @@
 // 12. Integer to Roman
+// Problem: Convert integer to its Roman numeral representation.
+// Approach: Greedy mapping from largest value to smallest; subtract while building string. Time O(1).
+
+// 12. Integer to Roman
 // Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.
 
 // Symbol       Value

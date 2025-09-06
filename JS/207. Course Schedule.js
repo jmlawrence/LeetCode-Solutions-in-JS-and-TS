@@ -1,61 +1,89 @@
 // 207. Course Schedule
+// Problem: Determine if it's possible to finish all courses given prerequisites.
+//
+// Core Concept: Cycle Detection in Directed Graph
+// This is fundamentally a graph problem - courses are nodes, prerequisites are edges.
+// If there's a cycle in the dependency graph, courses can't be completed.
+//
+// Graph Theory Insight:
+// - A DAG (Directed Acyclic Graph) allows topological ordering
+// - Any cycle makes completion impossible (circular dependency)
+// - We need to detect if the prerequisite graph contains any cycles
+//
+// Algorithm Choice: DFS with Three Colors
+// White (unvisited) -> Gray (in progress) -> Black (completed)
+// Gray nodes on the recursion stack indicate a back-edge (cycle)
+//
+// Alternative: Kahn's Algorithm (BFS with indegree)
+// This solution uses DFS for educational clarity about cycle detection
+//
+// Time: O(V + E) where V = courses, E = prerequisites
+// Space: O(V + E) for adjacency list + O(V) for recursion stack
+
 /**
  * @param {number} numCourses
  * @param {number[][]} prerequisites
  * @return {boolean}
  */
 var canFinish = function (numCourses, prerequisites) {
-  // Have an array for every course - filled with their prerequisites
+  // Build adjacency list representation of the graph
+  // preMap[course] = [list of prerequisites for this course]
   const preMap = {};
   for (let i = 0; i < numCourses; i++) {
     preMap[i] = [];
   }
-  for (const [crs, pre] of prerequisites) {
-    preMap[crs].push(pre);
+
+  // Add edges: for each [course, prerequisite] pair
+  for (const [course, prerequisite] of prerequisites) {
+    preMap[course].push(prerequisite);
   }
 
-  // Create set to help identify cycles
-  const cycleCheck = new Set();
+  // Three-color DFS state tracking
+  const UNVISITED = 0;
+  const IN_PROGRESS = 1;  // Gray - currently exploring (on recursion stack)
+  const COMPLETED = 2;    // Black - fully explored (no cycles below)
 
+  const state = new Array(numCourses).fill(UNVISITED);
+
+  /**
+   * DFS to detect cycles starting from a course
+   * @param {number} course - current course being explored
+   * @return {boolean} - true if no cycle detected, false if cycle found
+   */
   const dfs = (course) => {
-    // BASE CASE: already been visited: CYCLE DETECTED
-    if (cycleCheck.has(course)) {
+    // Cycle detected: found a back-edge to a node on recursion stack
+    if (state[course] === IN_PROGRESS) {
       return false;
     }
 
-    // Either already been visited (and prereqs checked out) - or no prereqs
-    if (preMap[course] === []) {
+    // Already fully explored this subtree - no cycles below
+    if (state[course] === COMPLETED) {
       return true;
     }
 
-    // Mark course as visited - to help detects cycles
-    cycleCheck.add(course);
+    // Mark as currently being explored (gray)
+    state[course] = IN_PROGRESS;
 
-    // If this course has any prereqs - process them
-    for (const pre of preMap[course]) {
-      // If any are false - return false - can't finish
-      if (!dfs(pre)) {
-        return false;
+    // Explore all prerequisites (children in the graph)
+    for (const prerequisite of preMap[course]) {
+      if (!dfs(prerequisite)) {
+        return false; // Cycle found in subtree
       }
     }
 
-    // No cycles detected! Remove; in case other course have this as prereq
-    cycleCheck.delete(course);
+    // Finished exploring all prerequisites - mark as completed (black)
+    state[course] = COMPLETED;
 
-    // All prereqs have passed - mark its prereqs as empty
-    preMap[course] = [];
-
-    // If it passes all this - it's valid
     return true;
   };
 
-  // In case there are islands - make sure to run through every course.
-  // Since we have marked visited course as having no prereqs - shouldn't effect performance.
-  for (const course in preMap) {
+  // Check all courses (handles disconnected components)
+  // Some courses might have no prerequisites or be in separate components
+  for (let course = 0; course < numCourses; course++) {
     if (!dfs(course)) {
-      return false;
+      return false; // Cycle detected
     }
   }
 
-  return true;
+  return true; // No cycles found - all courses can be completed
 };

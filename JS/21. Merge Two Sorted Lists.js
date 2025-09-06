@@ -1,9 +1,8 @@
 // 21. Merge Two Sorted Lists
-// You are given the heads of two sorted linked lists list1 and list2.
+// Problem: Merge two sorted linked lists into one sorted list.
+// Approach: Use sentinel node and two pointers to compare and merge.
+// Time: O(m + n), Space: O(1) extra
 
-// Merge the two lists in a one sorted list. The list should be made by splicing together the nodes of the first two lists.
-
-// Return the head of the merged linked list.
 /**
  * Definition for singly-linked list.
  * function ListNode(val, next) {
@@ -16,35 +15,34 @@
  * @param {ListNode} list2
  * @return {ListNode}
  */
-var mergeTwoLists = function(list1, list2) {
-    let sentinal = new ListNode();
-    let tail = sentinal;
-    
-    // While there is something in both lists
+var mergeTwoLists = function (list1, list2) {
+    // Sentinel node to simplify head handling
+    let sentinel = new ListNode();
+    let tail = sentinel;
+
+    // While both lists have nodes
     while (list1 && list2) {
-        // Find lower value and set that as the next node ...
-        // ... then, move the lower value list along
+        // Compare values and attach smaller one
         if (list1.val < list2.val) {
             tail.next = list1;
-            list1 = list1.next;
+            list1 = list1.next; // Move list1 forward
         } else {
             tail.next = list2;
-            list2 = list2.next;
+            list2 = list2.next; // Move list2 forward
         }
-        
-        // Move primary linked list along
+
+        // Advance tail
         tail = tail.next;
     }
-    
-    // If there's one list longer than the other ...
-    // ... add what's left on the longer list to the shorter list
+
+    // Attach remaining nodes from the non-empty list
     if (list1) {
         tail.next = list1;
-    } 
-    
+    }
+
     if (list2) {
         tail.next = list2;
     }
-    
-    return sentinal.next;
+
+    return sentinel.next; // Return merged list head
 };

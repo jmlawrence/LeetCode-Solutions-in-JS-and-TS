@@ -1,17 +1,7 @@
 // 22. Generate Parentheses
-
-// URL: https://leetcode.com/problems/generate-parentheses/
-
-// Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
-
-// Example 1:
-
-// Input: n = 3
-// Output: ["((()))","(()())","(())()","()(())","()()()"]
-// Example 2:
-
-// Input: n = 1
-// Output: ["()"]
+// Problem: Given n pairs of parentheses, generate all combinations of well-formed parentheses.
+// Approach: Backtracking with counts for open and close.
+// Time: O(4^n / sqrt(n)), Space: O(4^n / sqrt(n)) for result
 
 /**
  * @param {number} n
@@ -23,28 +13,28 @@ var generateParenthesis = function (n) {
   const result = [];
 
   const backTrack = (open, close) => {
-    // Base case; same amount of opens and closes + matches n
+    // Base case: all pairs used
     if (open === close && close === n) {
       result.push(stack.join(''));
       return;
     }
 
-    // Don't have enough opens
+    // Add opening if under limit
     if (open < n) {
       stack.push('(');
       backTrack(open + 1, close);
-      stack.pop();
+      stack.pop(); // Backtrack
     }
 
-    // Don't have enough closes
+    // Add closing if more opens than closes
     if (close < open) {
       stack.push(')');
       backTrack(open, close + 1);
-      stack.pop();
+      stack.pop(); // Backtrack
     }
   };
 
-  // Kick off with nothing
+  // Start with zero opens and closes
   backTrack(0, 0);
 
   return result;

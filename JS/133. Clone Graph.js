@@ -1,16 +1,8 @@
 // 133. Clone Graph
-/**
- * // Definition for a Node.
- * function Node(val, neighbors) {
- *    this.val = val === undefined ? 0 : val;
- *    this.neighbors = neighbors === undefined ? [] : neighbors;
- * };
- */
+// Problem: Given a reference of a node in a connected undirected graph, return a deep copy.
+// Approach: DFS or BFS with hashmap to track visited nodes and their copies.
+// Time: O(V + E), Space: O(V)
 
-/**
- * @param {Node} node
- * @return {Node}
- */
 var cloneGraph = function (node) {
   // Hashmap of existing newly copied nodes
   const oldToNew = {};

@@ -20,7 +20,7 @@
  * @return {number}
  */
 var maxProduct = function (nums) {
-  let result = Math.max(...nums);
+  let max = Math.max(...nums);
   let curMin = 1;
   let curMax = 1;
 
@@ -31,8 +31,8 @@ var maxProduct = function (nums) {
     curMax = Math.max(maxCan, minCan, num);
     curMin = Math.min(maxCan, minCan, num);
 
-    result = Math.max(result, curMax);
+    max = Math.max(max, curMax);
   }
 
-  return result;
+  return max;
 };

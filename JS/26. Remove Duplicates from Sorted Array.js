@@ -1,24 +1,24 @@
 // 26. Remove Duplicates from Sorted Array
-// Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once. The relative order of the elements should be kept the same.
+// Problem: Remove duplicates in-place from sorted array, return new length.
+// Approach: Two pointers; overwrite duplicates with next unique.
+// Time: O(n), Space: O(1)
 
-// Since it is impossible to change the length of the array in some languages, you must instead have the result be placed in the first part of the array nums. More formally, if there are k elements after removing the duplicates, then the first k elements of nums should hold the final result. It does not matter what you leave beyond the first k elements.
-
-// Return k after placing the final result in the first k slots of nums.
-
-// Do not allocate extra space for another array. You must do this by modifying the input array in-place with O(1) extra memory.
 /**
  * @param {number[]} nums
  * @return {number}
  */
 var removeDuplicates = function (nums) {
+  // Pointer for next unique position
   let pointer = 1;
 
-  for (var i = 1; i < nums.length; i++) {
+  for (let i = 1; i < nums.length; i++) {
+    // If current differs from previous, it's unique
     if (nums[i] !== nums[i - 1]) {
-      nums[pointer] = nums[i];
-      pointer++;
+      nums[pointer] = nums[i]; // Overwrite at pointer
+      pointer++; // Move pointer forward
     }
+    // Else, skip duplicate
   }
 
-  return pointer;
+  return pointer; // New length
 };

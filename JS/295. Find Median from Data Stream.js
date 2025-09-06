@@ -15,20 +15,33 @@
 // -------------------------------------------
 
 var MedianFinder = function () {
+  // Approach: two-heaps
+  // - this.one: Max-heap for the lower half
+  // - this.two: Min-heap for the upper half
+  // Invariant:
+  //   - sizes differ by at most 1
+  //   - when total count is odd, min-heap (this.two) holds the extra element
+  // Time per operation: addNum O(log n), findMedian O(1)
+  // Note: Uses LeetCode's built-in MaxPriorityQueue/MinPriorityQueue in JS.
   this.one = new MaxPriorityQueue();
   this.two = new MinPriorityQueue();
   this.balanced = true;
 };
 
 MedianFinder.prototype.addNum = function (num) {
+  // We alternate pushes to keep sizes balanced.
+  // When balanced=true, push into max-heap then move top to min-heap so min-heap may be larger.
   if (this.balanced) {
     this.one.enqueue(num);
+    // Move the largest from lower half to upper half
     this.two.enqueue(this.one.dequeue().element);
   } else {
+    // When balanced=false, push into min-heap then move top to max-heap
     this.two.enqueue(num);
     this.one.enqueue(this.two.dequeue().element);
   }
 
+  // Flip balanced flag: min-heap (this.two) will contain the extra element when odd count
   this.balanced = !this.balanced;
 };
 

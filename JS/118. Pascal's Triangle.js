@@ -1,22 +1,8 @@
 // 118. Pascal's Triangle
+// Problem: Given an integer numRows, return the first numRows of Pascal's triangle.
+// Approach: Build row by row, each element is sum of two above.
+// Time: O(n^2), Space: O(n^2)
 
-// Given an integer numRows, return the first numRows of Pascal's triangle.
-
-// In Pascal's triangle, each number is the sum of the two numbers directly above it as shown:
-
-// Example 1:
-
-// Input: numRows = 5
-// Output: [[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1]]
-// Example 2:
-
-// Input: numRows = 1
-// Output: [[1]]
-
-/**
- * @param {number} numRows
- * @return {number[][]}
- */
 var generate = function (numRows) {
   let rows = [[1]];
   let count = 1;

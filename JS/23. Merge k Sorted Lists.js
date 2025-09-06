@@ -13,35 +13,37 @@
  * @param {ListNode[]} lists
  * @return {ListNode}
  */
-var mergeKLists = function(lists) {
+var mergeKLists = function (lists) {
     if (!lists || !lists.length) {
         return null;
     }
-    
+
     while (lists.length > 1) {
         let merged = [];
-        
+
         // For all the lists - increment by 2
         for (let i = 0; i < lists.length; i += 2) {
             let l1 = lists[i];
             // List 2 might be out of bounds - so use ternary to check
             let l2 = (i + 1) < lists.length ? lists[i + 1] : null;
-            
+
             // Push in results
+            // Merge pairwise and collect results; this halves count each pass
             merged.push(mergeTwoLists(l1, l2));
         }
-        
+
         // Update lists to smaller arr
         lists = merged;
     }
-    
+
     return lists[0];
 };
 
 // Same as LeetCode 21: Merge Two Sorted Lists
 const mergeTwoLists = (list1, list2) => {
-    let sentinal = new ListNode();
-    let tail = sentinal;
+    // Sentinel node simplifies head/tail boundary handling
+    let sentinel = new ListNode();
+    let tail = sentinel;
 
     while (list1 && list2) {
         if (list1.val < list2.val) {
@@ -63,5 +65,5 @@ const mergeTwoLists = (list1, list2) => {
         tail.next = list2;
     }
 
-    return sentinal.next;
+    return sentinel.next;
 };

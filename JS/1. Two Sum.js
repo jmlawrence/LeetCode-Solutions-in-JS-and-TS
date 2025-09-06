@@ -1,4 +1,9 @@
 // 1. Two Sum
+// Problem: Given array nums and target, return indices of two numbers that add to target.
+// Approach: Two-pointer after sorting (original file). O(n log n) time, O(n) extra for index map.
+// Time: O(n log n), Space: O(n)
+
+// 1. Two Sum
 // Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
 
 // You may assume that each input would have exactly one solution, and you may not use the same element twice.

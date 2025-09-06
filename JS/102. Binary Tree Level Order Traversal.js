@@ -1,4 +1,9 @@
 // 102. Binary Tree Level Order Traversal
+// Problem: Return the level order traversal (breadth-first) of a binary tree's nodes' values.
+// Approach: BFS using a queue collecting nodes level by level.
+// Time: O(n), Space: O(n)
+
+// 102. Binary Tree Level Order Traversal
 
 // -------------------------------------------
 
@@ -21,33 +26,33 @@
  * @param {TreeNode} root
  * @return {number[][]}
  */
-var levelOrder = function(root) {
+var levelOrder = function (root) {
     let result = [];
     let q = [];
     q.push(root);
-    
+
     while (q.length > 0) {
         // Anything *currently* in the queue is a part of this level
         let qLen = q.length;
         let level = [];
-        
+
         for (let i = 0; i < qLen; i++) {
             let node = q.shift();
-            
+
             if (node) {
                 level.push(node.val);
-                
+
                 // Not a part of this level - but, need to be addressed later
                 q.push(node.left);
                 q.push(node.right);
             }
         }
-        
+
         // Sanity check; could be empty
         if (level.length > 0) {
             result.push(level);
         }
     }
-    
+
     return result;
 };

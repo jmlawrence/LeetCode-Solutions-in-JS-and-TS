@@ -29,28 +29,35 @@ var search = function (nums, target) {
   let right = nums.length - 1;
 
   while (left <= right) {
-    let middle = left + right;
+    // Compute mid index for current search range
+    // (Using floor to pick the lower middle on even lengths)
+    let middle = Math.floor((left + right) / 2);
 
     if (nums[middle] === target) {
       return middle;
     }
-    z``;
+    // Determine which side [left..middle] or [middle..right] is strictly sorted
+    // This helps decide which half to discard.
     let leftIsSorted = nums[left] <= nums[middle];
 
     if (leftIsSorted) {
-      // target is on the right or less than the left: left is now the middle
+      // Left half [left..middle] is sorted.
+      // If target is NOT within this sorted left half, it must be in right half.
       if (target > nums[middle] || target < nums[left]) {
-        left = mid + 1;
-        // otherwise; right is the middle
+        // target is not between nums[left] and nums[middle], search right
+        left = middle + 1;
       } else {
+        // target is within sorted left half, narrow to left
         right = middle - 1;
       }
     } else {
-      // if the target is on the left side or target is greater than the right: right is now the middle
+      // Right half [middle..right] is sorted.
+      // If target is NOT within this sorted right half, it must be in left half.
       if (target < nums[middle] || target > nums[right]) {
+        // target not between nums[middle] and nums[right], search left
         right = middle - 1;
-        // otherwise; left is the middle
       } else {
+        // target is within sorted right half, narrow to right
         left = middle + 1;
       }
     }

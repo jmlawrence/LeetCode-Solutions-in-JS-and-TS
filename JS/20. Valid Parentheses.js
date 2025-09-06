@@ -1,38 +1,34 @@
 // 20. Valid Parentheses
+// Problem: Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+// Approach: Use stack to track opening brackets; pop on matching close.
+// Time: O(n), Space: O(n)
+
 /**
  * @param {string} s
  * @return {boolean}
  */
-//  Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
-
-//  An input string is valid if:
-
-//  Open brackets must be closed by the same type of brackets.
-//  Open brackets must be closed in the correct order.
-//  Every close bracket has a corresponding open bracket of the same type.
-
 function isValidParens(s) {
-  // Key:value pairs; closing:opening
+  // Map closing to opening brackets
   let keys = { ")": "(", "}": "{", "]": "[" };
   let stack = [];
 
   for (const c of s) {
     const isClose = c in keys;
 
-    // If a closing char ...
+    // If it's a closing bracket...
     if (isClose) {
+      // Check if stack has matching opening
       if (stack.length > 0 && stack[stack.length - 1] === keys[c]) {
-        stack.pop();
+        stack.pop(); // Match found, remove from stack
       } else {
-        return false;
+        return false; // Mismatch or empty stack
       }
-
-      // ... otherwise we push on the stack
     } else {
+      // It's an opening bracket, push to stack
       stack.push(c);
     }
   }
 
-  // Is there any remaining 'opening' tags?
+  // Valid if no unmatched openings left
   return stack.length === 0;
 }
